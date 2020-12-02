@@ -1,0 +1,37 @@
+server:
+  #网关端口8083
+  port: 11002
+spring:
+  application:
+    #在服务中心的应用名称
+    name: gateway
+  cloud:
+    gateway:
+      #服务熔断，降级
+      default-filters:
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback
+      discovery:
+        locator:
+          #自动映射eureka下的服务路由
+          enabled: true
+          #开启服务名称小写
+          lower-case-service-id: true
+
+# hystrix熔断器，3秒后自动超时
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+
+
+# 注册到服务中心
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:11000/eureka/

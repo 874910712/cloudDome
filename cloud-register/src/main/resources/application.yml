@@ -1,0 +1,12 @@
+# 端口号为8080（默认也是8080）
+server:
+  port: 11000
+# 禁止注册自己
+eureka:
+  client:
+    #是否将自己注册到Eureka Server上，默认为true
+    register-with-eureka: false
+    #是否从Eureka Server上获取注册信息，默认为true
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:${server.port}/eureka/
